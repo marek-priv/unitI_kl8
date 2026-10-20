@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test z angielskiego — Unit 1 · klasa 8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f1e7;
+    --card: #fffdf8;
+    --ink: #2a2118;
+    --ink-soft: #6b5d4f;
+    --ink-faint: #9a8b7a;
+    --line: #e8ddc9;
+    --navy: #5b3a1e;
+    --navy-soft: #7a5029;
+    --accent: #c8952e;
+    --green: #16a34a;
+    --green-bg: #e7f6ec;
+    --red: #dc2626;
+    --red-bg: #fdecec;
+    --radius: 16px;
+    --shadow: 0 1px 3px rgba(60,40,15,.08), 0 10px 30px rgba(60,40,15,.09);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--bg);
+    background-image:
+      radial-gradient(1100px 460px at 85% -10%, rgba(200,149,46,.13), transparent 60%),
+      radial-gradient(800px 400px at -10% 110%, rgba(91,58,30,.07), transparent 60%);
+    color: var(--ink);
+    line-height: 1.5;
+    min-height: 100vh;
+    overflow-x: clip;
+    padding: 28px 16px 64px;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; }
+
+  /* ---------- header ---------- */
+  .brand {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 18px;
+  }
+  .brand .logo {
+    width: 42px; height: 42px; border-radius: 12px; flex: none;
+    background: linear-gradient(135deg, var(--navy), var(--navy-soft));
+    color: #f4d98c; display: grid; place-items: center;
+    font-weight: 800; font-size: 20px;
+    box-shadow: 0 4px 14px rgba(91,58,30,.35);
+  }
+  .brand h1 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(17px, 3.6vw, 21px); font-weight: 800; letter-spacing: .2px;
+  }
+  .brand p { font-size: 12px; color: var(--ink-soft); font-weight: 500; }
+
+  /* ---------- card ---------- */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: clamp(18px, 4vw, 30px);
+    animation: rise .3s ease;
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+  /* ---------- sections ---------- */
+  .sec-head {
+    font-size: 13px; font-weight: 800; color: var(--navy);
+    text-transform: uppercase; letter-spacing: .6px;
+    margin: 26px 0 4px; display: flex; align-items: center; gap: 9px;
+  }
+  .sec-head .sec-letter {
+    flex: none; width: 26px; height: 26px; border-radius: 8px;
+    background: linear-gradient(135deg, var(--navy), var(--navy-soft));
+    color: #f4d98c; display: grid; place-items: center; font-size: 13px;
+  }
+  .sec-head:first-child { margin-top: 0; }
+  .sec-desc { font-size: 12.5px; color: var(--ink-soft); margin-bottom: 14px; }
+
+  /* ---------- question blocks ---------- */
+  .q-block {
+    border: 1px solid var(--line); border-radius: 12px;
+    background: #fdfbf5; padding: 14px 16px; margin-bottom: 12px;
+  }
+  .q-num { font-size: 10.5px; font-weight: 800; color: var(--ink-faint); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 5px; }
+  .q-text { font-size: 14.5px; font-weight: 700; line-height: 1.45; margin-bottom: 12px; overflow-wrap: break-word; }
+  .pl-text { font-size: 13px; color: var(--ink-soft); margin-bottom: 10px; font-style: italic; }
+  .pl-text b { color: var(--ink); font-style: normal; }
+
+  /* ---------- options (radio) ---------- */
+  .opts { display: grid; gap: 10px; }
+  .opt {
+    display: flex; align-items: center; gap: 12px; text-align: left;
+    border: 1.5px solid var(--line); border-radius: 12px;
+    background: #fdfbf5; padding: 11px 15px;
+    font: inherit; font-size: 14px; font-weight: 600; color: var(--ink);
+    cursor: pointer; transition: border-color .15s, background .15s, transform .12s;
+    overflow-wrap: break-word;
+  }
+  .opt:hover { border-color: var(--navy-soft); background: #f7f0e0; }
+  .opt input[type="radio"] {
+    flex: none; width: 17px; height: 17px; accent-color: var(--navy); cursor: pointer; margin: 0;
+  }
+  .opt .key {
+    flex: none; width: 28px; height: 28px; border-radius: 8px;
+    background: #ece4d3; color: var(--ink-soft);
+    display: grid; place-items: center; font-size: 12px; font-weight: 800;
+  }
+  .opt.correct { border-color: var(--green); background: var(--green-bg); }
+  .opt.correct .key { background: var(--green); color: #fff; }
+  .opt.wrong { border-color: var(--red); background: var(--red-bg); }
+  .opt.wrong .key { background: var(--red); color: #fff; }
+  .opt.dim { opacity: .55; }
+
+  /* ---------- gap fill & writing inputs ---------- */
+  .gap-line { font-size: 14px; font-weight: 600; line-height: 2.3; color: var(--ink); }
+  .gap-input {
+    font: inherit; font-size: 13.5px; font-weight: 700; color: var(--ink);
+    width: 130px; padding: 5px 10px; margin: 0 3px;
+    border: 1.5px solid var(--line); border-radius: 9px; background: #fffdf8;
+    text-align: center; transition: border-color .15s, background .15s;
+  }
+  .write-input {
+    font: inherit; font-size: 14px; font-weight: 600; color: var(--ink);
+    width: 100%; padding: 10px 13px;
+    border: 1.5px solid var(--line); border-radius: 10px; background: #fffdf8;
+    transition: border-color .15s, background .15s;
+  }
+  .gap-input:focus, .write-input:focus { outline: none; border-color: var(--navy-soft); box-shadow: 0 0 0 3px rgba(122,80,41,.12); }
+  .gap-input.correct, .write-input.correct { border-color: var(--green); background: var(--green-bg); }
+  .gap-input.wrong, .write-input.wrong { border-color: var(--red); background: var(--red-bg); }
+  .answer-hint { margin-top: 7px; font-size: 12px; color: var(--ink-soft); }
+  .answer-hint b { color: var(--green); }
+
+  /* ---------- explanation / result flag ---------- */
+  .q-flag {
+    margin-top: 10px; font-size: 12.5px; font-weight: 700;
+    display: flex; align-items: baseline; gap: 7px;
+  }
+  .q-flag.ok { color: var(--green); }
+  .q-flag.bad { color: var(--red); }
+  .q-flag .small { font-weight: 500; color: var(--ink-soft); }
+  .q-flag .small b { color: var(--ink); }
+
+  /* ---------- buttons ---------- */
+  .btn {
+    font: inherit; font-weight: 700; font-size: 14px; cursor: pointer;
+    border-radius: 10px; padding: 11px 20px; border: none;
+    max-width: 100%;
+    transition: transform .12s, box-shadow .15s, background .15s;
+  }
+  .btn-primary { background: var(--navy); color: #fff; box-shadow: 0 4px 14px rgba(91,58,30,.30); }
+  .btn-primary:hover { background: var(--navy-soft); transform: translateY(-1px); }
+  .btn-ghost { background: #f0e9d8; color: var(--ink); }
+  .btn-ghost:hover { background: #e8dfc9; }
+  .submit-row { margin-top: 22px; display: flex; justify-content: center; }
+
+  /* ---------- start screen ---------- */
+  .start-hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 55%, #9a6b32 100%);
+    border-radius: 12px; color: #fff; padding: 22px; margin-bottom: 18px;
+  }
+  .start-hero h2 { font-family: "Playfair Display", Georgia, serif; font-size: clamp(19px, 4.6vw, 25px); font-weight: 800; }
+  .start-hero p { margin-top: 6px; font-size: 13px; color: #ecdcc0; }
+  .modlist { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 18px; }
+  .modlist span {
+    font-size: 11px; font-weight: 600; color: var(--ink-soft);
+    background: #f0e9d8; border-radius: 999px; padding: 4px 11px;
+  }
+  .start-row { display: flex; justify-content: center; }
+
+  /* ---------- results ---------- */
+  .result-grid { display: grid; grid-template-columns: 130px 1fr; gap: 18px; align-items: center; }
+  .donut { position: relative; width: 130px; height: 130px; }
+  .donut svg { transform: rotate(-90deg); }
+  .donut .pct {
+    position: absolute; inset: 0; display: grid; place-items: center;
+    flex-direction: column; text-align: center;
+  }
+  .donut .pct b { font-size: 26px; font-weight: 800; display: block; }
+  .donut .pct span { font-size: 11px; color: var(--ink-faint); font-weight: 600; }
+  .grade-badge {
+    display: inline-block; padding: 6px 16px; border-radius: 999px;
+    font-size: 15px; font-weight: 800; margin: 4px 0 8px;
+  }
+  .g6 { background: #eef0fe; color: #4f46e5; }
+  .g5 { background: var(--green-bg); color: var(--green); }
+  .g4 { background: #e3f3f7; color: #0e7490; }
+  .g3 { background: #fdf3e2; color: #b45309; }
+  .g2 { background: #fdeee3; color: #c2410c; }
+  .g1 { background: var(--red-bg); color: var(--red); }
+  .result-note { font-size: 13px; color: var(--ink-soft); margin-top: 4px; }
+  .result-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+
+  /* ---------- review ---------- */
+  .rev-item { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; }
+  .rev-item .rq { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .rev-item .ra { font-size: 12.5px; margin: 3px 0; display: flex; gap: 8px; align-items: baseline; }
+  .rev-item .ra .tick { font-weight: 800; width: 16px; flex: none; }
+  .ra.good { color: var(--green); }
+  .ra.bad { color: var(--red); }
+  .rev-item .re { margin-top: 8px; font-size: 12px; color: var(--ink-soft); background: #fdfbf5; border-left: 3px solid var(--accent); padding: 8px 10px; border-radius: 0 8px 8px 0; }
+  .rev-num { font-size: 10.5px; font-weight: 800; color: var(--ink-faint); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
+  .rev-sec { font-size: 12px; font-weight: 800; color: var(--navy); text-transform: uppercase; letter-spacing: .6px; margin: 18px 0 10px; }
+  .rev-sec:first-of-type { margin-top: 0; }
+
+  .hidden { display: none !important; }
+  footer { margin-top: 22px; text-align: center; font-size: 11px; color: var(--ink-faint); }
+
+  @media (max-width: 560px) {
+    body { padding: 16px 10px 48px; }
+    .result-grid { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+    .result-actions { justify-content: center; }
+    .gap-input { width: 110px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="brand">
+    <div class="logo">🇬🇧</div>
+    <div>
+      <h1>English test — Unit 1</h1>
+      <p>Język angielski · klasa 8 szkoły podstawowej · sprawdzian z działu 1</p>
+    </div>
+  </header>
+
+  <!-- ================= START ================= -->
+  <section class="card" id="screen-start">
+    <div class="start-hero">
+      <h2>Unit 1 — All about people</h2>
+      <p>16 pytań sprawdzających słownictwo i gramatykę z działu 1 — 3 sekcje, oceniane automatycznie po kliknięciu „Sprawdź odpowiedzi".</p>
+    </div>
+    <div class="modlist">
+      <span>Dane osobowe</span><span>Wygląd</span><span>Cechy charakteru</span>
+      <span>Uczucia</span><span>Relacje międzyludzkie</span>
+      <span>Present Perfect</span><span>for / since</span><span>each other / one another</span>
+    </div>
+    <div class="start-row">
+      <button class="btn btn-primary" id="btn-start">Rozpocznij test →</button>
+    </div>
+  </section>
+
+  <!-- ================= TEST ================= -->
+  <section class="card hidden" id="screen-quiz">
+    <div id="test-body"></div>
+    <div class="submit-row">
+      <button class="btn btn-primary" id="btn-submit">Sprawdź odpowiedzi ✔</button>
+    </div>
+  </section>
+
+  <!-- ================= RESULTS ================= -->
+  <section class="card hidden" id="screen-result">
+    <h2 style="font-size:20px;font-weight:800;margin-bottom:16px">Twój wynik</h2>
+    <div class="result-grid">
+      <div class="donut">
+        <svg width="130" height="130">
+          <circle cx="65" cy="65" r="56" fill="none" stroke="#ece4d3" stroke-width="12"/>
+          <circle id="donut-arc" cx="65" cy="65" r="56" fill="none" stroke="#16a34a" stroke-width="12"
+                  stroke-linecap="round" stroke-dasharray="351.9" stroke-dashoffset="351.9"/>
+        </svg>
+        <div class="pct"><b id="res-pct">0%</b><span id="res-pts"></span></div>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.5px">Ocena szkolna</div>
+        <span class="grade-badge g3" id="res-grade">—</span>
+        <div class="result-note" id="res-note"></div>
+      </div>
+    </div>
+    <div class="result-actions">
+      <button class="btn btn-primary" id="btn-restart">Spróbuj ponownie</button>
+      <button class="btn btn-ghost" id="btn-review">Przegląd odpowiedzi</button>
+    </div>
+  </section>
+
+  <!-- ================= REVIEW ================= -->
+  <section class="card hidden" id="screen-review">
+    <h2 style="font-size:20px;font-weight:800;margin-bottom:4px">Przegląd odpowiedzi</h2>
+    <p style="font-size:12.5px;color:var(--ink-soft);margin-bottom:16px" id="rev-sub"></p>
+    <div id="rev-list"></div>
+    <div class="result-actions">
+      <button class="btn btn-primary" id="btn-again">Spróbuj ponownie</button>
+      <button class="btn btn-ghost" id="btn-back">Wróć do wyniku</button>
+    </div>
+  </section>
+
+  <footer>Materiał edukacyjny · powtórka do działu „Unit 1” · klasa 8</footer>
+</div>
+
+<script>
+/* ==================== CONTENT ==================== */
+
+/* --- Sekcja A: wybór poprawnej odpowiedzi (radio) --- */
+const SECTION_A = [
+  {
+    mod: "Cechy charakteru",
+    q: "Kasia always has a lot to say and loves meeting new people. She is very ___.",
+    opts: ["shy", "outgoing", "rude", "lazy"],
+    a: 1,
+    expl: "<b>Outgoing</b> = towarzyski, otwarty na ludzi. <b>Shy</b> = nieśmiały, <b>rude</b> = nieuprzejmy, <b>lazy</b> = leniwy."
+  },
+  {
+    mod: "Wygląd",
+    q: "My grandad has no hair at all. He is ___.",
+    opts: ["curly", "blond", "bald", "ginger"],
+    a: 2,
+    expl: "<b>Bald</b> = łysy. <b>Curly</b> = kręcone (włosy), <b>blond</b> = jasne włosy, <b>ginger</b> = rude włosy."
+  },
+  {
+    mod: "Uczucia",
+    q: "Julia has a big exam tomorrow. She feels really ___ about it.",
+    opts: ["bored", "relieved", "nervous", "proud"],
+    a: 2,
+    expl: "<b>Nervous</b> = zdenerwowany — naturalne uczucie przed sprawdzianem. <b>Relieved</b> = odczuwający ulgę, <b>proud</b> = dumny, <b>bored</b> = znudzony."
+  },
+  {
+    mod: "Present Perfect",
+    q: "I ___ my best friend since we were kids.",
+    opts: ["know", "have known", "knew", "am knowing"],
+    a: 1,
+    expl: "<b>Since</b> wskazuje na Present Perfect: <b>have/has + III forma</b>. Czasownik <i>know</i> (stan) nie występuje w formie ciągłej — „am knowing” jest błędem."
+  },
+  {
+    mod: "each other / one another",
+    q: "Anna and Piotr love ___ very much.",
+    opts: ["ourselves", "themselves", "each other", "itself"],
+    a: 2,
+    expl: "Gdy dwie osoby robią coś <b>nawzajem</b>, używamy <b>each other</b> (lub <i>one another</i>). Zaimek zwrotny <i>themselves</i> znaczy „siebie/samych siebie” — bez wzajemności."
+  },
+  {
+    mod: "Dane osobowe",
+    q: "— What's your ___? — I'm Polish.",
+    opts: ["surname", "nationality", "hobby", "address"],
+    a: 1,
+    expl: "<b>Nationality</b> = narodowość. <b>Surname</b> = nazwisko, <b>hobby</b> = zainteresowanie, <b>address</b> = adres."
+  }
+];
+
+/* --- Sekcja B: uzupełnianie luk (wpisywanie słowa) --- */
+const SECTION_B = [
+  {
+    mod: "for / since",
+    pre: "They have been friends", post: "2018.",
+    a: ["since"],
+    expl: "<b>Since</b> + punkt w czasie (2018, Monday, childhood…). <b>For</b> + okres (ten years, a long time…)."
+  },
+  {
+    mod: "for / since",
+    pre: "We haven't seen each other", post: "a long time.",
+    a: ["for"],
+    expl: "<b>For</b> + okres czasu: <i>a long time, five years, ages</i>. Porównaj: <b>since</b> + moment początkowy."
+  },
+  {
+    mod: "for / since",
+    pre: "She has lived in Kraków", post: "she was born.",
+    a: ["since"],
+    expl: "<b>Since</b> + zdanie podrzędne (<i>she was born</i>) lub punkt w czasie. Tu łączy Present Perfect z opisem momentu w przeszłości."
+  },
+  {
+    mod: "each other / one another",
+    pre: "My brother and I always help", post: "with our homework.",
+    a: ["each other", "one another"],
+    expl: "<b>Each other</b> / <b>one another</b> = sobie nawzajem, wzajemnie (dwie strony czynności)."
+  },
+  {
+    mod: "Cechy charakteru",
+    pre: "He's very", post: ". He never says “please” or “thank you”.",
+    a: ["rude", "impolite"],
+    expl: "<b>Rude</b> / <b>impolite</b> = nieuprzejmy — osoba, która nie mówi „please” i „thank you”."
+  },
+  {
+    mod: "Uczucia",
+    pre: "I feel really", post: "today — I passed my exam!",
+    a: ["happy", "delighted", "glad", "pleased"],
+    expl: "Zdanie opisuje pozytywne uczucie po sukcesie: <b>happy / delighted / glad / pleased</b>. (Np. <i>sad, upset, angry</i> — nie pasują do kontekstu.)"
+  }
+];
+
+/* --- Sekcja C: pisanie zdań (elastyczna weryfikacja) --- */
+const SECTION_C = [
+  {
+    mod: "Tłumaczenie · Present Perfect",
+    pl: "Znamy się od pięciu lat.",
+    accepts: [],
+    patterns: [
+      "^we('ve| have) known (each other|one another) for (five|5) years$",
+      "^we('ve| have) been friends for (five|5) years$"
+    ],
+    expl: "Wzór: <b>We've known each other for five years.</b> — „know each other” wymaga Present Perfect z <b>for</b>. Można też: <i>We've been friends for five years.</i>"
+  },
+  {
+    mod: "Tłumaczenie · Present Perfect",
+    pl: "Oni przyjaźnią się od 2015 roku.",
+    accepts: [],
+    patterns: [
+      "^they('ve| have) been (good |best )?friends since 2015$",
+      "^they('ve| have) been friends since two thousand (and )?fifteen$"
+    ],
+    expl: "Wzór: <b>They have been friends since 2015.</b> — <b>since</b> + konkretny rok. Przyjaźń = <i>(to be) friends</i>."
+  },
+  {
+    mod: "Przekształcenie · Present Perfect",
+    pl: "Przepisz zdanie w czasie Present Perfect (zachowaj sens): „I met her three years ago and we are still friends.”",
+    accepts: [
+      "I have known her for three years",
+      "I've known her for three years",
+      "We have been friends for three years",
+      "We've been friends for three years",
+      "I have known her for 3 years",
+      "I've known her for 3 years",
+      "We have been friends for 3 years",
+      "We've been friends for 3 years"
+    ],
+    patterns: [
+      "^i('ve| have) known her for (three|3) years$",
+      "^we('ve| have) been friends for (three|3) years$",
+      "^we('ve| have) known each other for (three|3) years$"
+    ],
+    expl: "Wzór: <b>I've known her for three years.</b> albo <b>We have been friends for three years.</b> — zamiast „ago” używamy <b>for</b> + okres."
+  },
+  {
+    mod: "Tłumaczenie · each other",
+    pl: "Ania i Kasia pomagają sobie nawzajem w nauce.",
+    accepts: [],
+    patterns: [
+      "^(ania and kasia|kasia and ania|they) help (each other|one another)( with (their )?(studies|learning|schoolwork|homework))?$"
+    ],
+    expl: "Wzór: <b>Ania and Kasia help each other with their studies.</b> — „sobie nawzajem” = <b>each other / one another</b>. Akceptujemy też <i>They help each other</i>."
+  }
+];
+
+const SECTIONS = [
+  { letter: "A", title: "Wybierz poprawną odpowiedź", desc: "Zaznacz jedną odpowiedź w każdym pytaniu.", items: SECTION_A },
+  { letter: "B", title: "Uzupełnij luki", desc: "Wpisz brakujące słowo w lukę. Wielkość liter nie ma znaczenia.", items: SECTION_B },
+  { letter: "C", title: "Napisz zdania po angielsku", desc: "Przetłumacz lub przekształć zdania. Uznawane są poprawne warianty (skróty 've, „each other”/„one another”, liczby cyframi lub słownie, interpunkcja).", items: SECTION_C }
+];
+
+const TOTAL = SECTION_A.length + SECTION_B.length + SECTION_C.length;
+
+const GRADES = [
+  { min: 100, label: "celujący (6)", cls: "g6", note: "Perfekcyjnie! Angielski na najwyższym poziomie." },
+  { min: 90,  label: "bardzo dobry (5)", cls: "g5", note: "Świetny wynik — tylko drobne potknięcia." },
+  { min: 75,  label: "dobry (4)", cls: "g4", note: "Solidna wiedza, warto powtórzyć szczegóły." },
+  { min: 50,  label: "dostateczny (3)", cls: "g3", note: "Podstawy są, ale przeczytaj wyjaśnienia i powtórz materiał." },
+  { min: 35,  label: "dopuszczający (2)", cls: "g2", note: "Dużo do nadrobienia — sięgnij po podręcznik i spróbuj jeszcze raz." },
+  { min: 0,   label: "niedostateczny (1)", cls: "g1", note: "Nie poddawaj się! Powtórz materiał i spróbuj ponownie." }
+];
+
+/* ==================== ENGINE ==================== */
+
+const $ = id => document.getElementById(id);
+const screens = { start: $("screen-start"), quiz: $("screen-quiz"), result: $("screen-result"), review: $("screen-review") };
+const KEYS = ["A", "B", "C", "D"];
+
+let score = 0, results = [];   // results[i] = {ok, your, correct, q, mod}
+
+function show(name) {
+  Object.values(screens).forEach(s => s.classList.add("hidden"));
+  screens[name].classList.remove("hidden");
+  screens[name].style.animation = "none";
+  void screens[name].offsetWidth;
+  screens[name].style.animation = "";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+/* --- normalizacja tekstu dla sekcji B i C --- */
+function normTxt(s) {
+  return s
+    .toLowerCase()
+    .replace(/[’‘`ʼ]/g, "'")          // typograficzne apostrofy → '
+    .replace(/[.,!?;:()\[\]"„”]/g, "") // pomijamy interpunkcję
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function checkText(value, accepts, patterns) {
+  const v = normTxt(value);
+  if (!v) return false;
+  if ((accepts || []).some(a => normTxt(a) === v)) return true;
+  return (patterns || []).some(p => new RegExp(p, "i").test(v));
+}
+
+/* --- budowa testu --- */
+function renderTest() {
+  let qn = 0;
+  const html = SECTIONS.map(sec => {
+    const blocks = sec.items.map((q, i) => {
+      qn++;
+      const num = qn;
+      if (sec.letter === "A") {
+        return `<div class="q-block" data-q="A${i}">
+          <div class="q-num">Pytanie ${num} · ${q.mod}</div>
+          <div class="q-text">${q.q}</div>
+          <div class="opts">${q.opts.map((o, j) =>
+            `<label class="opt" data-opt="${j}">
+              <input type="radio" name="qA${i}" value="${j}">
+              <span class="key">${KEYS[j]}</span><span>${o}</span>
+            </label>`).join("")}</div>
+          <div class="q-flag-slot"></div>
+        </div>`;
+      }
+      if (sec.letter === "B") {
+        return `<div class="q-block" data-q="B${i}">
+          <div class="q-num">Pytanie ${num} · ${q.mod}</div>
+          <div class="gap-line">${q.pre} <input class="gap-input" id="gap-B${i}" type="text" autocomplete="off" spellcheck="false"> ${q.post}</div>
+          <div class="q-flag-slot"></div>
+        </div>`;
+      }
+      return `<div class="q-block" data-q="C${i}">
+        <div class="q-num">Pytanie ${num} · ${q.mod}</div>
+        <div class="pl-text">${q.pl}</div>
+        <input class="write-input" id="gap-C${i}" type="text" autocomplete="off" spellcheck="false" placeholder="Wpisz zdanie po angielsku…">
+        <div class="q-flag-slot"></div>
+      </div>`;
+    }).join("");
+    return `<div class="sec-head"><span class="sec-letter">${sec.letter}</span> Sekcja ${sec.letter} — ${sec.title}</div>
+            <div class="sec-desc">${sec.desc}</div>${blocks}`;
+  }).join("");
+  $("test-body").innerHTML = html;
+}
+
+/* --- sprawdzenie po kliknięciu „Sprawdź odpowiedzi” --- */
+function grade() {
+  score = 0; results = [];
+
+  SECTION_A.forEach((q, i) => {
+    const block = document.querySelector(`[data-q="A${i}"]`);
+    const sel = block.querySelector(`input[name="qA${i}"]:checked`);
+    const you = sel ? +sel.value : undefined;
+    const ok = you === q.a;
+    if (ok) score++;
+    block.querySelectorAll(".opt").forEach((l, j) => {
+      if (j === q.a) l.classList.add("correct");
+      else if (j === you) l.classList.add("wrong");
+      else l.classList.add("dim");
+    });
+    block.querySelector(".q-flag-slot").innerHTML =
+      `<div class="q-flag ${ok ? "ok" : "bad"}">${ok ? "✔ Dobrze!" : "✘ " + (you === undefined ? "Brak odpowiedzi — " : "") + "poprawna odpowiedź: <b>" + KEYS[q.a] + "</b>"} <span class="small">${q.expl}</span></div>`;
+    results.push({ sec: "A", mod: q.mod, q: q.q, ok, your: you !== undefined ? q.opts[you] : null, correct: q.opts[q.a], expl: q.expl });
+  });
+
+  SECTION_B.forEach((q, i) => {
+    const input = $(`gap-B${i}`);
+    const ok = checkText(input.value, q.a, []);
+    if (ok) score++;
+    input.classList.add(ok ? "correct" : "wrong");
+    const block = document.querySelector(`[data-q="B${i}"]`);
+    block.querySelector(".q-flag-slot").innerHTML =
+      `<div class="q-flag ${ok ? "ok" : "bad"}">${ok ? "✔ Dobrze!" : "✘ Poprawna odpowiedź: <b>" + q.a[0] + "</b>"} <span class="small">${q.expl}</span></div>`;
+    results.push({ sec: "B", mod: q.mod, q: `${q.pre} ___ ${q.post}`, ok, your: input.value.trim() || null, correct: q.a[0], expl: q.expl });
+  });
+
+  SECTION_C.forEach((q, i) => {
+    const input = $(`gap-C${i}`);
+    const ok = checkText(input.value, q.accepts, q.patterns);
+    if (ok) score++;
+    input.classList.add(ok ? "correct" : "wrong");
+    const block = document.querySelector(`[data-q="C${i}"]`);
+    block.querySelector(".q-flag-slot").innerHTML =
+      `<div class="q-flag ${ok ? "ok" : "bad"}">${ok ? "✔ Dobrze!" : "✘ Wzorcowa odpowiedź poniżej"} <span class="small">${q.expl}</span></div>`;
+    results.push({ sec: "C", mod: q.mod, q: q.pl, ok, your: input.value.trim() || null, correct: q.expl, expl: q.expl, isWrite: true });
+  });
+
+  showResults();
+}
+
+function gradeFor(pct) { return GRADES.find(g => pct >= g.min); }
+
+function showResults() {
+  const pct = Math.round((score / TOTAL) * 100);
+  const g = gradeFor(pct);
+  $("res-pct").textContent = pct + "%";
+  $("res-pts").textContent = `${score}/${TOTAL} punktów`;
+  const badge = $("res-grade");
+  badge.textContent = g.label;
+  badge.className = "grade-badge " + g.cls;
+  $("res-note").textContent = g.note;
+  const arc = $("donut-arc");
+  const circ = 2 * Math.PI * 56;
+  arc.style.strokeDasharray = circ;
+  arc.style.stroke = pct >= 50 ? "#16a34a" : pct >= 35 ? "#f59e0b" : "#dc2626";
+  arc.style.transition = "none";
+  arc.style.strokeDashoffset = circ;
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    arc.style.transition = "stroke-dashoffset .9s ease";
+    arc.style.strokeDashoffset = circ * (1 - pct / 100);
+  }));
+  show("result");
+}
+
+function renderReview() {
+  $("rev-sub").textContent = `Twój wynik: ${score}/${TOTAL} — kliknij „Spróbuj ponownie”, aby podejść do testu jeszcze raz.`;
+  const secNames = { A: "Sekcja A — wybór odpowiedzi", B: "Sekcja B — uzupełnianie luk", C: "Sekcja C — pisanie zdań" };
+  let n = 0;
+  $("rev-list").innerHTML = ["A", "B", "C"].map(sec => {
+    const items = results.filter(r => r.sec === sec).map(r => {
+      n++;
+      return `<div class="rev-item">
+        <div class="rev-num">Pytanie ${n} · ${r.mod}</div>
+        <div class="rq">${r.q}</div>
+        <div class="ra ${r.ok ? "good" : "bad"}"><span class="tick">${r.ok ? "✔" : "✘"}</span>
+          <span>Twoja odpowiedź: <b>${r.your ?? "brak"}</b></span></div>
+        ${r.ok ? "" : (r.isWrite
+          ? `<div class="ra good"><span class="tick">✔</span><span>Wzór: ${r.correct}</span></div>`
+          : `<div class="ra good"><span class="tick">✔</span><span>Poprawna: <b>${r.correct}</b></span></div>`)}
+        ${r.isWrite ? "" : `<div class="re">${r.expl}</div>`}
+      </div>`;
+    }).join("");
+    return `<div class="rev-sec">${secNames[sec]}</div>` + items;
+  }).join("");
+  show("review");
+}
+
+function restart() {
+  score = 0; results = [];
+  renderTest();
+  show("quiz");
+}
+
+$("btn-start").addEventListener("click", restart);
+$("btn-submit").addEventListener("click", grade);
+$("btn-restart").addEventListener("click", restart);
+$("btn-again").addEventListener("click", restart);
+$("btn-review").addEventListener("click", renderReview);
+$("btn-back").addEventListener("click", () => show("result"));
+</script>
+</body>
+</html>
